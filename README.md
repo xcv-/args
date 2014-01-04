@@ -17,6 +17,4 @@ achieved it except for the `to_str` method, which is used for error reporting.
 Example
 =======
 
-See `main.cpp` for an example program, you can compile with
-`clang++ -std=c++11 main.cpp -I.` or `g++ -std=c++11 main.cpp -I.`. I haven't
-tried with VS.
+See `main.cpp` for an example program, you can compile with `make libargs test`.
