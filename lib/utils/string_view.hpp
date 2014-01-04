@@ -63,11 +63,12 @@ public:
 
 }
 
-bool operator== (const args::StrView& v1, const args::StrView& v2) {
-	return v1.size() == v2.size() && strncmp(v1.c_str(), v2.c_str(), v1.size()) == 0;
+inline bool operator== (const args::StrView& v1, const args::StrView& v2) {
+	return v1.size() == v2.size() &&
+		std::strncmp(v1.c_str(), v2.c_str(), v1.size()) == 0;
 }
 
-std::ostream& operator<< (std::ostream& o, const args::StrView& v) {
+inline std::ostream& operator<< (std::ostream& o, const args::StrView& v) {
 	return o << v.c_str();
 }
 

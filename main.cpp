@@ -141,6 +141,6 @@ int main(int argc, char** argv) {
 		args::print_help(flag_parser, {"  ", 4}, cout);
 
 	} else {
-		args::report_error(result);
+		args::report_error(result, cout);
 	}
 }

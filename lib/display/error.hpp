@@ -17,49 +17,24 @@
  *  along with Args.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#ifndef ARGS_TYPES_H
-#define ARGS_TYPES_H
+#ifndef ARGS_DISPLAY_ERROR_H
+#define ARGS_DISPLAY_ERROR_H
 
-#include <limits>
+#include <iosfwd>
+#include <sstream>
 #include <string>
-#include <vector>
-
-#include "utils/string_view.hpp"
-#include "utils/result.hpp"
-
-#include "common/parse_error.hpp"
 
 
 namespace args {
+	struct ParseError;
 
-#ifndef INT_MAX
-constexpr std::size_t INT_MAX = std::numeric_limits<int>::max();
-#endif
-
-using uint = unsigned int;
-
-using Str = std::string;
-
-template <bool cond, typename Ret = ParseResultVoid>
-using If = typename std::enable_if<cond, Ret>::type;
-
-
-struct BaseArg {
-	uint multiplicity = 0;
-
-	explicit operator bool() const {
-		return multiplicity > 0;
-	}
-
-	virtual Str to_str() const = 0;
-};
-
-Str err_arg_str(const BaseArg* arg) {
-	return arg
-		? arg->to_str() + " (" + std::to_string(arg->multiplicity) + ")"
-		: "(null)";
+	void report_error(const ParseError& err, std::ostream& o);
 }
 
+std::ostream& operator<< (std::ostream& o, const args::ParseError& e);
+
+namespace std {
+string to_string(const args::ParseError& e);
 }
 
 #endif

@@ -54,7 +54,7 @@ parse_impl(InputIt argv_begin, InputIt argv_end, ArgParsers&... arg_parsers) {
 }
 
 
-ParseResultVoid parse_iter(const ParserState& state) {
+inline ParseResultVoid parse_iter(const ParserState& state) {
 	return ParseError(UnknownArg(state));
 }
 
@@ -68,7 +68,7 @@ ParseResultVoid parse_iter(OwnedParserState& state,
 }
 
 
-ParseResultVoid eval_postcond_iter(const OwnedParserState& state) {
+inline ParseResultVoid eval_postcond_iter(const OwnedParserState& state) {
 	return success();
 }
 

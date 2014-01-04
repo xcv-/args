@@ -107,25 +107,29 @@ public:
 		return Result(ErrTag(), std::forward<Ts>(args)...);
 	}
 
+
 	bool is_ok() const {
 		return type == Type::Ok;
 	}
 
+
 	const OkType& get_ok() const {
 		return ok_value;
-	}
-
-	const ErrType& get_err() const {
-		return err_value;
 	}
 
 	OkType& get_ok() {
 		return ok_value;
 	}
 
+
+	const ErrType& get_err() const {
+		return err_value;
+	}
+
 	ErrType& get_err() {
 		return err_value;
 	}
+
 
 	template <typename F>
 	const Result& if_ok(F&& f) const& {
@@ -150,6 +154,7 @@ public:
 
 		return std::move(*this);
 	}
+
 
 	template <typename F>
 	const Result& if_err(F&& f) const& {

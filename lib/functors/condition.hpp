@@ -32,7 +32,7 @@ namespace args {
 
 namespace condition {
 
-ParseResultVoid cond_fail(Str error_msg) {
+inline ParseResultVoid cond_fail(Str error_msg) {
 	return ParseError(CondFailed(std::move(error_msg)));
 }
 
@@ -130,15 +130,7 @@ struct Requires {
 
 	explicit Requires(const BaseArg& to_find) : to_find(to_find) {}
 
-	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const {
-		using namespace std;
-		auto& m = s.matched_args;
-
-		if (find(begin(m), end(m), &to_find) == end(m))
-			return success();
-		else
-			return cond_fail("Requires " + to_find.to_str());
-	}
+	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const;
 };
 
 struct Conflicts {
@@ -146,15 +138,7 @@ struct Conflicts {
 
 	explicit Conflicts(const BaseArg& to_find) : to_find(to_find) {}
 
-	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const {
-		using namespace std;
-		auto& m = s.matched_args;
-
-		if (find(begin(m), end(m), &to_find) != end(m))
-			return success();
-		else
-			return cond_fail("Requires " + to_find.to_str());
-	}
+	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const;
 };
 
 
@@ -163,17 +147,7 @@ struct Before {
 
 	explicit Before(const BaseArg& to_find) : to_find(to_find) {}
 
-	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const {
-		for (const BaseArg* matched : s.matched_args) {
-			if (matched == &to_find)
-				return cond_fail("Before " + to_find.to_str());
-
-			if (matched == &self)
-				break;
-		}
-
-		return success();
-	}
+	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const;
 };
 
 struct After {
@@ -181,17 +155,7 @@ struct After {
 
 	explicit After(const BaseArg& to_find) : to_find(to_find) {}
 
-	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const {
-		for (const BaseArg* matched : s.matched_args) {
-			if (matched == &self)
-				return cond_fail("After " + to_find.to_str());
-
-			if (matched == &to_find)
-				break;
-		}
-
-		return success();
-	}
+	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const;
 };
 
 struct Min {
@@ -199,12 +163,7 @@ struct Min {
 
 	explicit Min(uint min_multiplicity) : min_multiplicity(min_multiplicity) {}
 
-	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const {
-		if (self.multiplicity >= min_multiplicity)
-			return success();
-		else
-			return cond_fail("Min " + std::to_string(min_multiplicity));
-	}
+	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const;
 };
 
 struct Max {
@@ -212,12 +171,7 @@ struct Max {
 
 	explicit Max(uint max_multiplicity) : max_multiplicity(max_multiplicity) {}
 
-	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const {
-		if (self.multiplicity <= max_multiplicity)
-			return success();
-		else
-			return cond_fail("Max " + std::to_string(max_multiplicity));
-	}
+	ParseResultVoid operator() (const BaseArg& self, const ParserState& s) const;
 };
 
 
@@ -235,37 +189,37 @@ Any<Predicates...> any(Predicates... predicates) {
 }
 
 
-Requires requires(const BaseArg& to_find) {
+inline Requires requires(const BaseArg& to_find) {
 	return Requires(to_find);
 }
 
-Conflicts conficts(const BaseArg& to_find) {
+inline Conflicts conficts(const BaseArg& to_find) {
 	return Conflicts(to_find);
 }
 
 
-Before before(const BaseArg& to_find) {
+inline Before before(const BaseArg& to_find) {
 	return Before(to_find);
 }
 
-After after(const BaseArg& to_find) {
+inline After after(const BaseArg& to_find) {
 	return After(to_find);
 }
 
 
-Min min(uint min_multiplicity) {
+inline Min min(uint min_multiplicity) {
 	return Min(min_multiplicity);
 }
 
-Max max(uint max_multiplicity) {
+inline Max max(uint max_multiplicity) {
 	return Max(max_multiplicity);
 }
 
-All<Min,Max> between(uint min_multiplicity, uint max_multiplicity) {
+inline All<Min,Max> between(uint min_multiplicity, uint max_multiplicity) {
 	return all(min(min_multiplicity), max(max_multiplicity));
 }
 
-All<Min,Max> exactly(uint multiplicity) {
+inline All<Min,Max> exactly(uint multiplicity) {
 	return between(multiplicity, multiplicity);
 }
 

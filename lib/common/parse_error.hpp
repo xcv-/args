@@ -29,13 +29,16 @@
 #include <boost/variant/variant.hpp>
 #include <boost/variant/get.hpp>
 
-#include "common/parser_state.hpp"
 #include "utils/string_view.hpp"
+#include "utils/result.hpp"
+
+#include "common/parser_state.hpp"
 
 
 namespace args {
 
 struct BaseArg;
+struct ParserState;
 
 struct Nothing {};
 
@@ -44,8 +47,7 @@ struct BaseArgError {
 
 	BaseArgError() = default;
 
-	explicit BaseArgError(const BaseArg* arg)
-		: arg(arg) {}
+	explicit BaseArgError(const BaseArg* arg) : arg(arg) {}
 };
 
 
@@ -73,8 +75,7 @@ struct InvalidParam : public BaseArgError {
 	std::string custom_msg;
 	StrView given;
 
-	InvalidParam(std::string custom_msg, StrView given,
-			const BaseArg* arg = nullptr)
+	InvalidParam(std::string custom_msg, StrView given, const BaseArg* arg = nullptr)
 		: BaseArgError(arg)
 		, custom_msg(std::move(custom_msg))
 		, given(given) {}
@@ -183,20 +184,6 @@ struct ParseError
 	bool is_ok() const {
 		return is<Nothing>(*this);
 	}
-
-	Result<Nothing, ParseError> as_result() const& {
-		if (is_ok())
-			return Result<Nothing, ParseError>::ok();
-		else
-			return Result<Nothing, ParseError>::err(*this);
-	}
-
-	Result<Nothing, ParseError> as_result() && {
-		if (is_ok())
-			return Result<Nothing, ParseError>::ok();
-		else
-			return Result<Nothing, ParseError>::err(std::move(*this));
-	}
 };
 
 template <typename T>
@@ -204,7 +191,7 @@ using ParseResult = Result<T, ParseError>;
 
 using ParseResultVoid = ParseError;
 
-ParseResultVoid success() {
+inline ParseResultVoid success() {
 	return ParseError(Nothing());
 }
 

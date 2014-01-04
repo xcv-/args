@@ -30,56 +30,11 @@
 #include "common/arg.hpp"
 #include "functors/condition.hpp"
 
+#include "flag/flag_matcher.hpp"
 #include "flag/param_parser.hpp"
 
 
 namespace args {
-
-struct FlagMatcher {
-	static constexpr char no_shortopt = '\0';
-
-	char shortopt;
-	Str longopt;
-
-	FlagMatcher(char shortopt, Str longopt)
-		: shortopt(shortopt)
-		, longopt(std::move(longopt)) {}
-
-
-	bool match_shortopt(const ParserState& s) const {
-		return shortopt != no_shortopt && s.ch() == shortopt;
-	}
-
-	bool match_longopt(const ParserState& s) const {
-		return s.str_off == 0 && s.arg() == longopt;
-	}
-
-	bool match(ParserState& s) const {
-		if (match_shortopt(s)) {
-			advance_shortopt(s);
-			return true;
-		}
-
-		else if (match_longopt(s)) {
-			s.pos++;
-			return true;
-		}
-
-		else
-			return false;
-	}
-
-
-	static void advance_shortopt(ParserState& s) {
-		s.str_off++;
-
-		if (s.str_off == s.arg().size()) {
-			s.str_off = 0;
-			s.pos++;
-		}
-	}
-};
-
 
 template <typename PreCond, typename PostCond, typename... Params>
 class Flag : public Arg<

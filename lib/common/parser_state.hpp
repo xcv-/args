@@ -20,6 +20,9 @@
 #ifndef ARGS_PARSER_STATE_H
 #define ARGS_PARSER_STATE_H
 
+#include <vector>
+#include <string>
+
 #include "utils/string_view.hpp"
 
 
@@ -43,39 +46,22 @@ struct ParserState {
 
 	ParserState(
 			const std::vector<const BaseArg*>& matched_args,
-			const std::vector<StrView>& argv)
-		: matched_args(matched_args)
-		, argv(argv) {}
+			const std::vector<StrView>& argv);
 
 	ParserState(const ParserState&) = default;
 
 
-	bool bounds_check() const {
-		return ::args::bounds_check(pos, argv);
-	}
+	bool bounds_check() const;
 
-	bool offset_check() const {
-		return ::args::bounds_check(str_off, arg());
-	}
+	bool offset_check() const;
 
-	const StrView& arg() const {
-		return argv[pos];
-	}
+	const StrView& arg() const;
 
-	const StrView& arg_next() {
-		auto& a = arg();
-		pos++;
-		return a;
-	}
+	const StrView& arg_next();
 
-	char ch() const {
-		return arg()[str_off];
-	}
+	char ch() const;
 
-	void update(ParserState& clone) {
-		pos = clone.pos;
-		str_off = clone.str_off;
-	}
+	void update(ParserState& clone);
 };
 
 
