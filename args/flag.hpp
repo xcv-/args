@@ -118,7 +118,7 @@ class Flag : public Arg<
 		})
 
 		.if_err([&](ParseError&& err) {
-			res = err;
+			res = std::move(err);
 		});
 
 		return res;
@@ -147,11 +147,9 @@ public:
 	Str doc_metavars;
 
 
-	template <typename PreCondCons, typename PostCondCons>
-	Flag(char shortopt, Str longopt, PreCondCons&& precond, PostCondCons&& postcond)
+	Flag(char shortopt, Str longopt, PreCond precond, PostCond postcond)
 		: Arg<ParamsTuple, PreCond, PostCond, Flag>(
-				std::forward<PreCondCons>(precond),
-				std::forward<PostCondCons>(postcond))
+				std::move(precond), std::move(postcond))
 		, matcher(shortopt, std::move(longopt)) {}
 
 	Flag(Flag&&) = default;
@@ -199,12 +197,8 @@ public:
 
 template <typename... FlagTs>
 class FlagParser : public ArgParser<FlagTs...> {
-	static_assert(
-		All<IsBaseHKT<Flag, FlagTs>::value...>::value,
-		"Template parameters of FlagParser must be Flag<>'s");
 
 	bool found_endflags = false;
-
 
 public:
 

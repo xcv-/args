@@ -44,31 +44,6 @@ template <bool cond, typename Ret = ParseResultVoid>
 using If = typename std::enable_if<cond, Ret>::type;
 
 
-template <template <typename...> class HKT, typename T>
-struct IsBaseHKT : public std::false_type {};
-
-template <
-	template <typename...> class HKT,
-	template <typename...> class HKT2,
-	typename... Ts
->
-struct IsBaseHKT<HKT, HKT2<Ts...>>
-	: public std::is_base_of<HKT<Ts...>, HKT2<Ts...>> {};
-
-
-template <bool... X>
-struct All;
-
-template <>
-struct All<> : public std::true_type {};
-
-template <bool... X>
-struct All<true, X...> : public All<X...> {};
-
-template <bool... X>
-struct All<false, X...> : public std::false_type {};
-
-
 struct BaseArg {
 	uint multiplicity = 0;
 
