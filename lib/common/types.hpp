@@ -54,12 +54,6 @@ struct BaseArg {
 	virtual Str to_str() const = 0;
 };
 
-inline Str err_arg_str(const BaseArg* arg) {
-	return arg
-		? arg->to_str() + " (" + std::to_string(arg->multiplicity) + ")"
-		: "(null)";
-}
-
 }
 
 #endif

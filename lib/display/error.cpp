@@ -4,6 +4,13 @@
 #include "common/parse_error.hpp"
 
 
+std::string err_arg_str(const args::BaseArg* arg) {
+	return arg
+		? arg->to_str() + " (" + std::to_string(arg->multiplicity) + ")"
+		: "(null)";
+}
+
+
 void args::report_error(const args::ParseError& err, std::ostream& o) {
 	using namespace args;
 

@@ -14,7 +14,7 @@ cleanup:
 build: $(SRCS)
 	for f in $(SRCS); do \
 		echo $(CXX) $(CXXFLAGS) -c $$f; \
-		$(CXX) $(CXXFLAGS) -c $$f; \
+		$(CXX) $(CXXFLAGS) -c $$f || exit 1; \
 	done
 	$(CXX) *.o -shared -o $(OUT_LIB) $(LDFLAGS)
 	ar rcs $(OUT_STATIC) *.o
