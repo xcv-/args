@@ -58,6 +58,6 @@ all arguments and the parser returns immediately. You can find pre-made
 conditions in `conditions.hpp`.
 
 Parsers are just containers for arguments and they are also extensible if it's
-necessary to add some logic on top parsers (see `FlagParser` in `flag.hpp` for
-an example) also deriving from `ArgParser<ArgTs...>`, where `ArgTs` are the types
-of the arguments to manage.
+necessary to add special logic on top of arguments (see `FlagParser` in `flag.hpp`
+for an example) also deriving from `ArgParser<ArgTs...>`, where `ArgTs` are the
+types of the arguments to manage.
