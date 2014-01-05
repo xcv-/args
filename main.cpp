@@ -62,31 +62,31 @@ int main(int argc, char** argv) {
 
 	// -h
 	// --help
-	auto help_flag = args::flag('h', "--help", True(), max(0))
+	auto help_flag = args::flag('h', "help", True(), max(0))
 		.description("print this message and exit");
 
 	// no minimum or maximum multiplicity
 	// -f
 	// --flag
-	auto plain_flag = args::flag('f', "--flag")
+	auto plain_flag = args::flag('f', "flag")
 		.description("this doesn't do anything at all, just a fancy flag");
 
 	// -b <bool>
 	// --bool <bool>
-	auto bool_flag = args::flag<bool>('b', "--bool")
+	auto bool_flag = args::flag<bool>('b', "bool")
 		.metavars("BOOL")
 		.description("pass a boolean");
 
 	// -i <int>
 	// --int <int>
-	auto int_flag = args::flag<int>('i', "--int", True(), min(1))
+	auto int_flag = args::flag<int>('i', "int", True(), min(1))
 		.metavars("INT")
 		.description("pass an integer");
 
 	// (must be after -b or --bool)
 	// -m <bool> <int>
 	// --multi <bool> <int>
-	auto multi_flag = args::flag<bool, int>('m', "--multi",
+	auto multi_flag = args::flag<bool, int>('m', "multi",
 			True(),
 			all(exactly(1), after(bool_flag)))
 		.metavars("BOOL INT")

@@ -7,6 +7,7 @@ FlagMatcher::FlagMatcher(char shortopt, Str longopt)
 	: shortopt(shortopt)
 	, longopt(std::move(longopt)) {}
 
+
 bool FlagMatcher::match_shortopt(const ParserState& s) const {
 	return shortopt != no_shortopt && s.ch() == shortopt;
 }

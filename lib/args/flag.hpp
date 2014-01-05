@@ -205,7 +205,7 @@ Flag<PreCond, PostCond, Ts...>
 flag(Str longopt, PreCond precond = PreCond(), PostCond postcond = PostCond()) {
 	return flag<Ts...>(
 			FlagMatcher::no_shortopt,
-			std::move(longopt),
+			std::move(longopt.append("--")),
 			std::move(precond),
 			std::move(postcond));
 }
