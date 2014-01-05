@@ -190,7 +190,7 @@ flag(char shortopt, Str longopt,
 
 	return {
 		shortopt,
-		std::move(longopt),
+		std::move(longopt.insert(0, "--")),
 		std::move(precond),
 		std::move(postcond)
 	};
@@ -205,7 +205,7 @@ Flag<PreCond, PostCond, Ts...>
 flag(Str longopt, PreCond precond = PreCond(), PostCond postcond = PostCond()) {
 	return flag<Ts...>(
 			FlagMatcher::no_shortopt,
-			std::move(longopt.append("--")),
+			std::move(longopt),
 			std::move(precond),
 			std::move(postcond));
 }
