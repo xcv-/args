@@ -45,7 +45,9 @@ argument, the methods `ParseResult<T> parse_impl(ParserState&)` and
 necessary, a helper factory function makes usage easier to read and write.
 You can see `lambda_arg.hpp`, `map_lookup_arg.hpp` and `flag.hpp` for example
 argument implementations. If you only need to use the argument once, check out
-`LambdaArg` or `MapLookupArg`, they may be useful.
+`LambdaArg` or `MapLookupArg`, they may be useful. Flags have a different
+extension mechanism, you should specialize `ParamParser` for your type instead
+of inheritance, `Flag`s will automatically be able parse your type with it.
 
 Arguments also contain preconditions and postconditions. These are functors
 that evaluate an argument with a `ParserState` and return either `success()`
