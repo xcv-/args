@@ -38,7 +38,7 @@ easy to read message describing the provided error and `print_help` will
 generate a common help message for the given parser with the specified `HelpFmt`.
 
 All arguments derive from `Arg<T, Derived>`, where `T` is the type to be parsed
-(may be an enum member for commands or an actual value for example) and `Derived`
+(e.g. an enum member for commands or a `Path` for an input file) and `Derived`
 is the type itself for the CRTP. In order to provide an implementation for the
 argument, the methods `ParseResult<T> parse_impl(ParserState&)` and
 `virtual std::string to_str() const` have to be implemented. Although it's not
@@ -52,7 +52,8 @@ that evaluate an argument with a `ParserState` and return either `success()`
 or a `ParseError`. The difference between preconditions and postconditions is
 that preconditions are evaluated before parsing and skip the argument in the
 parser pass if they fail, whereas postconditions are evaluated after parsing
-all arguments and the parser returns immediately.
+all arguments and the parser returns immediately. You can find pre-made
+conditions in `conditions.hpp`.
 
 Parsers are just containers for arguments and they are also extensible if it's
 necessary to add some logic on top parsers (see `FlagParser` in `flag.hpp` for
