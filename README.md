@@ -26,7 +26,7 @@ Documentation
 I hate writing documentation, so here it goes a brief explaination.
 
 This library has two main components: arguments and parsers. Arguments describe
-actual arguments that should be taken into account when parsed. They also
+actual arguments that should be taken into account when parsing. They also
 contain logic about how they should be parsed. Parsers just store references to
 arguments with the same priority and loop through them.
 
