@@ -7,8 +7,12 @@ int main(int argc, char** argv) {
 		.description("a flag"); // description to show in the help message
 
 	auto integer_flag = args::flag<int>("integer")
-		//.metavers("INT") // parameter name to display in the help message
+		.metavars("INT") // parameter name to display in the help message
 		.description("takes an integer");
+
+	auto multi_param_flag = args::flag<int,bool,int>('m', "multi-param")
+		.metavars("INT BOOL INT2")
+		.description("this is used to show how multiple parameters can be passed");
 
 	auto requires_flag = args::flag('r', "requires-flag", True(), requires(flag))
 		.description("does nothing, but requires -f or --flag");
@@ -38,7 +42,9 @@ int main(int argc, char** argv) {
 	// and the endopts mark. anything else can be in a args() parser.
 	// order in which they are specified is the order in which the parser will
 	// try to parse them.
-	auto flag_parser = args::flags(flag, integer_flag, requires_flag, help_flag, once_flag);
+	auto flag_parser = args::flags(flag, integer_flag, multi_param_flag,
+	                               requires_flag, help_flag, once_flag);
+
 	auto argument_parser = args::args(command, target);
 
 	// takes two InputIterators (args_begin and args_end). value_type must be
@@ -55,8 +61,16 @@ int main(int argc, char** argv) {
 
 		// .result is a vector<T>. In the case of flags, T is a tuple
 		// of the parameter types, in this case, tuple<int>
-		for (const auto& i : integer_flag.result)
-			cout << std::get<0>(i) << ' ';
+		for (const auto& tup : integer_flag.result)
+			cout << std::get<0>(tup) << ' ';
+		cout << "\n";
+
+		cout << "Found --multi-param values: ";
+		for (const auto& tup : multi_param_flag.result)
+			cout << '(' << boolalpha << std::get<0>(tup) << ','
+			     << ' ' << boolalpha << std::get<1>(tup) << ','
+			     << ' ' << boolalpha << std::get<2>(tup) << ") ";
+
 		cout << "\n";
 
         cout << "Found -r or --requires-flag? " << boolalpha <<

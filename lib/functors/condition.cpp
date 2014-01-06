@@ -8,7 +8,7 @@ ParseResultVoid Requires::operator() (const BaseArg& self, const ParserState& s)
 	using namespace std;
 	auto& m = s.matched_args;
 
-	if (find(begin(m), end(m), &to_find) != end(m))
+	if (self.multiplicity == 0 || find(begin(m), end(m), &to_find) != end(m))
 		return success();
 	else
 		return cond_fail("Requires " + to_find.to_str());
@@ -18,7 +18,7 @@ ParseResultVoid Conflicts::operator() (const BaseArg& self, const ParserState& s
 	using namespace std;
 	auto& m = s.matched_args;
 
-	if (find(begin(m), end(m), &to_find) == end(m))
+	if (self.multiplicity == 0 || find(begin(m), end(m), &to_find) == end(m))
 		return success();
 	else
 		return cond_fail("Conflicts " + to_find.to_str());

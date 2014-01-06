@@ -34,8 +34,16 @@ Argument declarations:
 * Flag that expects an integer. Has no shortopt and longopt is `--integer`:
 ```c++
     auto integer_flag = args::flag<int>("integer")
-        .metavers("INT") // parameter name to display in the help message
+        .metavars("INT") // parameter name to display in the help message
         .description("takes an integer");
+```
+
+* There's no limit to the number of parameters for a flag (only bool and int
+  are predefined, specialize ParamParser for custom types):
+```c++
+    auto multi_param_flag = args::flag<int,bool,int>('m', "multi-param")
+        .metavars("INT BOOL INT2")
+        .description("this is used to show how multiple parameters can be passed");
 ```
 
 * Requires `-f` or `--flag`:
@@ -94,7 +102,9 @@ Argument declarations:
     // and the endopts mark. anything else can be in a args() parser.
     // order in which they are specified is the order in which the parser will
     // try to parse them.
-    auto flag_parser = args::flags(flag, integer_flag, requires_flag, help_flag, once_flag);
+    auto flag_parser = args::flags(flag, integer_flag, multi_param_flag,
+                                   requires_flag, help_flag, once_flag);
+
     auto argument_parser = args::args(command, target);
 ```
 
