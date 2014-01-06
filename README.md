@@ -104,10 +104,10 @@ Argument declarations:
     // takes two InputIterators (args_begin and args_end). value_type must be
     // convertible to args::StrView (const char* or std::string)
     auto result = args::parse(argv+1, argv+argc, flag_parser, argument_parser);
-    ```
+```
 
-    * Using the result:
-    ```c++
+* Using the result:
+```c++
     using std::cout;
     using std::boolalpha;
 
