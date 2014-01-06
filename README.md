@@ -70,8 +70,8 @@ Argument declarations:
   considered it has not been given yet. Preconditions are similar to this
   pseudocode:
 ```c++
-    if precondition_ok()
-        parse(requires_flag);
+    if (precondition_ok())
+        parse(current);
     else
         try_next();
 ```
