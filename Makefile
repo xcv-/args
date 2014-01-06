@@ -12,5 +12,8 @@ libargs:
 test:
 	$(CXX) $(CXXFLAGS) main.cpp -o $(OUT) $(LDFLAGS)
 
+example:
+	$(CXX) $(CXXFLAGS) readme_example.cpp -o $(OUT) $(LDFLAGS)
+
 clean:
 	rm -f $(OUT)

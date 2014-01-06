@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
 
 	// -h
 	// --help
-	auto help_flag = args::flag('h', "help", True(), max(0))
+	auto help_flag = args::flag('h', "help", True(), False())
 		.description("print this message and exit");
 
 	// no minimum or maximum multiplicity
@@ -115,7 +115,7 @@ int main(int argc, char** argv) {
 
 	// example: ./a.out -b false build --int 314 -fm true 42 all -fb true
 
-	auto flag_parser = args::flags(help_flag, plain_flag, bool_flag, int_flag, multi_flag);
+	auto flag_parser = args::flags(plain_flag, bool_flag, int_flag, multi_flag, help_flag);
 	auto arg_parser = args::args(testcmd_arg, testcmdinner_arg);
 
 	auto result = args::parse(argv+1, argv+argc, flag_parser, arg_parser);

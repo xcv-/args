@@ -27,6 +27,8 @@
 #include "common/parse_error.hpp"
 #include "common/parser_state.hpp"
 
+#include "display/error.hpp"
+
 
 namespace args {
 
