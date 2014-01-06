@@ -56,7 +56,7 @@ template <>
 struct ParamParser<int> {
 	using Result = ParseResult<int>;
 
-	static ParseResult<int> parse(ParserState& s) {
+	static Result parse(ParserState& s) {
 		if (!s.bounds_check())
 			return Result::err(BoundError("ParamParser<int>"));
 
@@ -70,6 +70,23 @@ struct ParamParser<int> {
 			return Result::ok(result);
 		else
 			return Result::err(ParseError(InvalidParam("could not parse int", arg)));
+	}
+};
+
+template <>
+struct ParamParser<Str> {
+	using Result = ParseResult<Str>;
+
+	static Result parse(ParserState& s) {
+		if (!s.bounds_check())
+			return Result::err(BoundError("ParamParser<Str>"));
+
+		const auto& arg = s.arg_next();
+
+		if (s.str_off != 0)
+			return Result::err(ParseError(InvalidShortoptList(arg)));
+		else
+			return Result::ok(arg.str());
 	}
 };
 

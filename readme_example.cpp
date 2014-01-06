@@ -10,8 +10,8 @@ int main(int argc, char** argv) {
 		.metavars("INT") // parameter name to display in the help message
 		.description("takes an integer");
 
-	auto multi_param_flag = args::flag<int,bool,int>('m', "multi-param")
-		.metavars("INT BOOL INT2")
+	auto multi_param_flag = args::flag<int,bool,std::string>('m', "multi-param")
+		.metavars("INT BOOL STR")
 		.description("this is used to show how multiple parameters can be passed");
 
 	auto requires_flag = args::flag('r', "requires-flag", True(), requires(flag))

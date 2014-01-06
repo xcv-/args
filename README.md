@@ -42,11 +42,11 @@ Argument declarations:
         .description("takes an integer");
 ```
 
-* There's no limit to the number of parameters for a flag (only bool and int
-  are predefined, specialize `ParamParser` for custom types):
+* There's no limit to the number of parameters for a flag (only string, bool
+  and int are predefined, specialize `ParamParser` for custom types):
 ```c++
-    auto multi_param_flag = args::flag<int,bool,int>('m', "multi-param")
-        .metavars("INT BOOL INT2")
+    auto multi_param_flag = args::flag<int,bool,std::string>('m', "multi-param")
+        .metavars("INT BOOL STR")
         .description("this is used to show how multiple parameters can be passed");
 ```
 
@@ -144,9 +144,9 @@ Argument declarations:
         cout << "Found --multi-param values: ";
 
         for (const auto& tup : multi_param_flag.result)
-            cout << '(' << boolalpha << std::get<0>(tup) << ','
+            cout << '('              << std::get<0>(tup) << ','
                  << ' ' << boolalpha << std::get<1>(tup) << ','
-                 << ' ' << boolalpha << std::get<2>(tup) << ") ";
+                 << ' '              << std::get<2>(tup) << ") ";
 
         cout << "\n";
 
