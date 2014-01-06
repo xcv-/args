@@ -69,7 +69,12 @@ Argument declarations:
 * Either `build` or `run`. It must appear exactly once. This will only be
   considered it has not been given yet. Preconditions are similar to this
   pseudocode:
-  ` if precondition_ok() then parse(requires_flag); else try_next()`
+```c++
+    if precondition_ok()
+        parse(requires_flag);
+    else
+        try_next();
+```
   Note that `max(0)` is used instead of `max(1)` because the condition is
   evaluated before parsing, in which case it would have been found 0 times:
 ```c++
@@ -78,7 +83,7 @@ Argument declarations:
         { "build", Command::BUILD },
         { "run",   Command::RUN   }
     }, max(0), exactly(1))
-        .description("available commands"); // shown in the generated help message
+        .description("available commands");
 ```
 
 * Either `all` or `current`. It will only be considered after a `command` has

@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 		{ "build", Command::BUILD },
 		{ "run",   Command::RUN   }
 	}, max(0), min(1))
-	.description("available commands"); // shown in the generated help message
+	.description("available commands");
 
 	enum class Target { ALL, CURRENT };
 	auto target = args::map_lookup_arg<Target>({
