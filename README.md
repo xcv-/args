@@ -98,7 +98,7 @@ Argument declarations:
 ```
 
 * Group them by priority. Note that `command` and `target` will fail to
-  parse immediately and  args::parse()` will return an error. Flags should
+  parse immediately and  `args::parse()` will return an error. Flags should
   also be put in the first place in order to be considered whenever an argument
   starting with "-" is found. The endopts flag ("--") is built-in and checked
   automatically.
