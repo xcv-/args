@@ -118,8 +118,6 @@ private:
 			return parse_iter<I+1>(state);
 
 		} else {
-			std::cout << "failed, set_arg " << arg.to_str() << "\n";
-
 			res.set_arg(&arg);
 			return res;
 		}
