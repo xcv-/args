@@ -59,12 +59,11 @@ Argument declarations:
 ```
 
 * Either `build` or `run`. It must appear exactly once. This will only be
-  considered if the first flag we considered has been found. Preconditions
-  are similar to this pseudocode:
+  considered it has not been given yet. Preconditions are similar to this
+  pseudocode:
   ` if precondition_ok() then parse(requires_flag); else try_next()`
   Note that `max(0)` is used instead of `max(1)` because the condition is
-  evaluated before parsing, therefore this will only be accepted if it hasn't
-  been found yet:
+  evaluated before parsing, in which case it would have been found 0 times:
 ```c++
     enum class Command { BUILD, RUN };
     auto command = args::map_lookup_arg<Command>({
