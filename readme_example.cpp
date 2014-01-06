@@ -66,6 +66,7 @@ int main(int argc, char** argv) {
 		cout << "\n";
 
 		cout << "Found --multi-param values: ";
+
 		for (const auto& tup : multi_param_flag.result)
 			cout << '(' << boolalpha << std::get<0>(tup) << ','
 			     << ' ' << boolalpha << std::get<1>(tup) << ','
@@ -73,8 +74,8 @@ int main(int argc, char** argv) {
 
 		cout << "\n";
 
-        cout << "Found -r or --requires-flag? " << boolalpha <<
-            (bool) requires_flag << '\n';
+		cout << "Found -r or --requires-flag? " << boolalpha <<
+			(bool) requires_flag << '\n';
 
 		cout << "Command is BUILD? " << boolalpha <<
 			(command.result.front() == Command::BUILD) << '\n';

@@ -39,7 +39,7 @@ Argument declarations:
 ```
 
 * There's no limit to the number of parameters for a flag (only bool and int
-  are predefined, specialize ParamParser for custom types):
+  are predefined, specialize `ParamParser` for custom types):
 ```c++
     auto multi_param_flag = args::flag<int,bool,int>('m', "multi-param")
         .metavars("INT BOOL INT2")
@@ -129,6 +129,15 @@ Argument declarations:
         // of the parameter types, in this case, tuple<int>
         for (const auto& i : integer_flag.result)
             cout << std::get<0>(i) << ' ';
+
+        cout << "\n";
+
+        cout << "Found --multi-param values: ";
+
+        for (const auto& tup : multi_param_flag.result)
+            cout << '(' << boolalpha << std::get<0>(tup) << ','
+                 << ' ' << boolalpha << std::get<1>(tup) << ','
+                 << ' ' << boolalpha << std::get<2>(tup) << ") ";
 
         cout << "\n";
 
