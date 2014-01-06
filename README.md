@@ -154,7 +154,7 @@ Argument declarations:
     }
 ```
 
-A working example can be found in `main.cpp`.
+Another working example can be found in `main.cpp`, which I use for testing.
 
 Documentation
 ===============
