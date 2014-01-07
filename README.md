@@ -86,7 +86,7 @@ Argument declarations:
     auto command = args::map_lookup_arg<Command>({
         { "build", Command::BUILD },
         { "run",   Command::RUN   }
-    }, max(0), exactly(1))
+    }, max(0), min(1))
         .description("available commands");
 ```
 
@@ -97,7 +97,7 @@ Argument declarations:
     auto target = args::map_lookup_arg<Target>({
         { "all",     Target::ALL     },
         { "current", Target::CURRENT }
-    }, all(after(command), max(0)), exactly(1))
+    }, all(after(command), max(0)), min(1))
         .description("available targets");
 ```
 
