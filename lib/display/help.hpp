@@ -20,6 +20,7 @@
 #ifndef ARGS_DISPLAY_HELP_H
 #define ARGS_DISPLAY_HELP_H
 
+#include <array>
 #include <iostream>
 
 #include "utils/string_view.hpp"
