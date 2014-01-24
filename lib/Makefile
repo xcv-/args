@@ -1,5 +1,5 @@
 CXX=/usr/bin/clang++
-CXXFLAGS=-std=c++11 -I.
+CXXFLAGS=-std=c++11 -I. -fPIC
 LDFLAGS=
 
 SRCS=$(shell find . -name '*.cpp')
